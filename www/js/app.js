@@ -15,6 +15,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   $ionicConfigProvider.tabs.position('bottom');
 })
 
+.config(['$compileProvider', function($compileProvider){
+  $compileProvider.aHrefSanitizationWhitelist(/^\s*(geo|mailto|tel|maps):/);
+}])
+
 .config(function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
