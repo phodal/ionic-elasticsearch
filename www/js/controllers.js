@@ -33,8 +33,8 @@ angular.module('starter.controllers', [])
 			})
 		}),
 		view: new ol.View({
-			center: [0, 0],
-			zoom: 2
+			center: ol.proj.transform([5.8713, 45.6452], 'EPSG:4326', 'EPSG:3857'),
+			zoom: 13
 		})
 	});
 
