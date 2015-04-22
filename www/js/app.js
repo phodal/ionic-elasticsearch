@@ -11,6 +11,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   });
 })
 
+.config(function($ionicConfigProvider){
+  $ionicConfigProvider.tabs.position('bottom');
+})
+
 .config(function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
