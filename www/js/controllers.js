@@ -24,7 +24,6 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 		zoom: 2
 	});
 
-	var container = document.getElementById('popup');
 	var content = document.getElementById('popup-content');
 
 	var map = new ol.Map({
@@ -52,38 +51,60 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 		});
 
 	recipeService.search("", 0).then(function(results){
-		var position = results[0].location.split(",");
-		var pos = ol.proj.transform([parseFloat(position[1]), parseFloat(position[0])], 'EPSG:4326', 'EPSG:3857');
+		var vectorSource = new ol.source.Vector({ });
+		$.each(results, function(index, result){
+			console.log(index);
 
-		var marker = new ol.Overlay({
-			position: pos,
-			positioning: 'center-center',
-			element: document.getElementById('marker'),
-			stopEvent: false
+			for (var i=0;i<50;i++){
+
+				var iconFeature = new ol.Feature({
+					geometry: new
+						ol.geom.Point(ol.proj.transform([Math.random()*360-180, Math.random()*180-90], 'EPSG:4326',   'EPSG:3857')),
+					name: 'Null Island ' + i,
+					population: 4000,
+					rainfall: 500
+				});
+				vectorSource.addFeature(iconFeature);
+			}
 		});
-		map.addOverlay(marker);
 
-		var popup = new ol.Overlay({
-			element: document.getElementById('popup')
+		var iconStyle = new ol.style.Style({
+			image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+				anchor: [0.5, 46],
+				anchorXUnits: 'fraction',
+				anchorYUnits: 'pixels',
+				opacity: 0.75,
+				src: 'img/icon.png'
+			}))
 		});
-		map.addOverlay(popup);
 
-		map.on('click', function(evt) {
-			var element = popup.getElement();
-			var coordinate = evt.coordinate;
-			var hdms = ol.coordinate.toStringHDMS(ol.proj.transform(
-				coordinate, 'EPSG:3857', 'EPSG:4326'));
-
-			$(element).popover('destroy');
-			popup.setPosition(coordinate);
-			$(element).popover({
-				'placement': 'top',
-				'animation': false,
-				'html': true,
-				'content': '<p>The location you clicked was:</p><code>' + hdms + '</code>'
-			});
-			$(element).popover('show');
+		var vectorLayer = new ol.layer.Vector({
+			source: vectorSource,
+			style: iconStyle
 		});
+		map.addLayer(vectorLayer);
+		//
+		//var popup = new ol.Overlay({
+		//	element: document.getElementById('popup')
+		//});
+		//map.addOverlay(popup);
+		//
+		//map.on('click', function(evt) {
+		//	var element = popup.getElement();
+		//	var coordinate = evt.coordinate;
+		//	var hdms = ol.coordinate.toStringHDMS(ol.proj.transform(
+		//		coordinate, 'EPSG:3857', 'EPSG:4326'));
+		//
+		//	$(element).popover('destroy');
+		//	popup.setPosition(coordinate);
+		//	$(element).popover({
+		//		'placement': 'top',
+		//		'animation': false,
+		//		'html': true,
+		//		'content': '<p>The location you clicked was:</p><code>' + hdms + '</code>'
+		//	});
+		//	$(element).popover('show');
+		//});
 
 	});
 })
