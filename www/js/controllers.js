@@ -44,7 +44,7 @@ angular.module('starter.controllers', [])
 	});
 	geolocation.once('change:position', function() {
 		view.setCenter(geolocation.getPosition());
-		view.setResolution(2.388657133911758);
+		view.setResolution(100.0);
 	});
 })
 
