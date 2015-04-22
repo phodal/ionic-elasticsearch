@@ -4,6 +4,7 @@ angular.module('starter.services', [])
   ['$q', 'esFactory', '$location', function($q, elasticsearch, $location){
     var client = elasticsearch({
       host: $location.host() + ":9200"
+      //host: "http://es.phodal.com/"
     });
 
     /**
@@ -39,4 +40,5 @@ angular.module('starter.services', [])
       "search": search
     };
   }]
-);
+)
+;
