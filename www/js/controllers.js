@@ -53,8 +53,6 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 	recipeService.search("", 0).then(function(results){
 		var vectorSource = new ol.source.Vector({ });
 		$.each(results, function(index, result){
-			console.log(index);
-
 			var position = result.location.split(",");
 			var pos = ol.proj.transform([parseFloat(position[1]), parseFloat(position[0])], 'EPSG:4326', 'EPSG:3857');
 
@@ -62,6 +60,7 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 			var iconFeature = new ol.Feature({
 					geometry: new ol.geom.Point(pos),
 					name: result.title,
+					phone: result.phone_number,
 					population: 4000,
 					rainfall: 500
 			});
@@ -69,7 +68,7 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 		});
 
 		var iconStyle = new ol.style.Style({
-			image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+			image: new ol.style.Icon(({
 				anchor: [0.5, 46],
 				anchorXUnits: 'fraction',
 				anchorYUnits: 'pixels',
@@ -83,29 +82,36 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 			style: iconStyle
 		});
 		map.addLayer(vectorLayer);
-		//
-		//var popup = new ol.Overlay({
-		//	element: document.getElementById('popup')
-		//});
-		//map.addOverlay(popup);
-		//
-		//map.on('click', function(evt) {
-		//	var element = popup.getElement();
-		//	var coordinate = evt.coordinate;
-		//	var hdms = ol.coordinate.toStringHDMS(ol.proj.transform(
-		//		coordinate, 'EPSG:3857', 'EPSG:4326'));
-		//
-		//	$(element).popover('destroy');
-		//	popup.setPosition(coordinate);
-		//	$(element).popover({
-		//		'placement': 'top',
-		//		'animation': false,
-		//		'html': true,
-		//		'content': '<p>The location you clicked was:</p><code>' + hdms + '</code>'
-		//	});
-		//	$(element).popover('show');
-		//});
 
+		var element = document.getElementById('popup');
+
+		var popup = new ol.Overlay({
+			element: element,
+			positioning: 'bottom-center',
+			stopEvent: false
+		});
+		map.addOverlay(popup);
+
+		map.on('click', function(evt) {
+			var feature = map.forEachFeatureAtPixel(evt.pixel,
+				function(feature, layer) {
+					return feature;
+				});
+
+			if (feature) {
+				var geometry = feature.getGeometry();
+				var coord = geometry.getCoordinates();
+				popup.setPosition(coord);
+				$(element).popover({
+					'placement': 'top',
+					'html': true,
+					'content': "商品:" + feature.get('name') + "<br/>" + "联系方式:" + feature.get('phone')
+				});
+				$(element).popover('show');
+			} else {
+				$(element).popover('destroy');
+			}
+		});
 	});
 })
 

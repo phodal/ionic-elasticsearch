@@ -31,5 +31,12 @@ html, body, .map {
     text-shadow: black 0.1em 0.1em 0.2em;
 }
 .popover-content {
-    min-width: 180px;
+    min-width: 50px;
 }
+.popover {
+    max-height: 120px;
+    margin-left: 0px;
+    
+    height: auto;
+}
+
