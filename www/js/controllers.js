@@ -52,8 +52,8 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 		});
 
 	recipeService.search("", 0).then(function(results){
-
-		var pos = ol.proj.transform([16.3725, 48.208889], 'EPSG:4326', 'EPSG:3857');
+		var position = results[0].location.split(",");
+		var pos = ol.proj.transform([parseFloat(position[1]), parseFloat(position[0])], 'EPSG:4326', 'EPSG:3857');
 
 		var marker = new ol.Overlay({
 			position: pos,
@@ -62,12 +62,6 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 			stopEvent: false
 		});
 		map.addOverlay(marker);
-
-		var vienna = new ol.Overlay({
-			position: pos,
-			element: document.getElementById('vienna')
-		});
-		map.addOverlay(vienna);
 
 		var popup = new ol.Overlay({
 			element: document.getElementById('popup')
@@ -82,7 +76,6 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 
 			$(element).popover('destroy');
 			popup.setPosition(coordinate);
-			// the keys are quoted to prevent renaming in ADVANCED mode.
 			$(element).popover({
 				'placement': 'top',
 				'animation': false,
