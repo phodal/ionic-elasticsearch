@@ -26,13 +26,6 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 
 	var container = document.getElementById('popup');
 	var content = document.getElementById('popup-content');
-	var overlay = new ol.Overlay(/** @type {olx.OverlayOptions} */ ({
-		element: container,
-		autoPan: true,
-		autoPanAnimation: {
-			duration: 250
-		}
-	}));
 
 	var map = new ol.Map({
 		layers: [
@@ -43,7 +36,6 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 				})
 			})
 		],
-		overlays: [overlay],
 		renderer: exampleNS.getRendererFromQueryString(),
 		target: 'map',
 		view: view
@@ -60,15 +52,46 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 		});
 
 	recipeService.search("", 0).then(function(results){
-		var position = results[0].location.split(",");
-		var long = parseFloat(position[1]).toFixed(2);
-		var lat = parseFloat(position[0]).toFixed(2);
 
-		console.log(long, lat)
-		var pos = ol.proj.transform([long, 34.216151], 'EPSG:4326', 'EPSG:3857');
-		console.log(pos);
-		content.innerHTML = "<p>Hello World</p>";
-		overlay.setPosition(pos);
+		var pos = ol.proj.transform([16.3725, 48.208889], 'EPSG:4326', 'EPSG:3857');
+
+		var marker = new ol.Overlay({
+			position: pos,
+			positioning: 'center-center',
+			element: document.getElementById('marker'),
+			stopEvent: false
+		});
+		map.addOverlay(marker);
+
+		var vienna = new ol.Overlay({
+			position: pos,
+			element: document.getElementById('vienna')
+		});
+		map.addOverlay(vienna);
+
+		var popup = new ol.Overlay({
+			element: document.getElementById('popup')
+		});
+		map.addOverlay(popup);
+
+		map.on('click', function(evt) {
+			var element = popup.getElement();
+			var coordinate = evt.coordinate;
+			var hdms = ol.coordinate.toStringHDMS(ol.proj.transform(
+				coordinate, 'EPSG:3857', 'EPSG:4326'));
+
+			$(element).popover('destroy');
+			popup.setPosition(coordinate);
+			// the keys are quoted to prevent renaming in ADVANCED mode.
+			$(element).popover({
+				'placement': 'top',
+				'animation': false,
+				'html': true,
+				'content': '<p>The location you clicked was:</p><code>' + hdms + '</code>'
+			});
+			$(element).popover('show');
+		});
+
 	});
 })
 
