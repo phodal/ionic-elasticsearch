@@ -1,6 +1,6 @@
-angular.module('starter.controllers', ['elasticsearch'])
+angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 
-.controller('DashCtrl', function($scope) {
+.controller('DashCtrl', function($scope, $cordovaGeolocation) {
 	var exampleNS = {};
 
 	exampleNS.getRendererFromQueryString = function() {
@@ -43,9 +43,21 @@ angular.module('starter.controllers', ['elasticsearch'])
 		tracking: true
 	});
 	geolocation.once('change:position', function() {
-		view.setCenter(geolocation.getPosition());
-		view.setResolution(100.0);
+		//view.setCenter(geolocation.getPosition());
+		//view.setResolution(1000.0);
 	});
+
+	var posOptions = {timeout: 10000, enableHighAccuracy: false};
+	$cordovaGeolocation
+		.getCurrentPosition(posOptions)
+		.then(function (position) {
+			var lat = position.coords.latitude;
+			var long = position.coords.longitude;
+			view.setCenter();
+			view.setResolution(10000.0);
+		}, function (err) {
+			console.log(err)
+		});
 })
 
 .controller('ChatsCtrl', function($scope, recipeService) {
