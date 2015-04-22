@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 
-.controller('DashCtrl', function($scope, $cordovaGeolocation) {
+.controller('DashCtrl', function($scope, $cordovaGeolocation, $http, recipeService) {
 	var exampleNS = {};
 
 	exampleNS.getRendererFromQueryString = function() {
@@ -24,6 +24,16 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 		zoom: 2
 	});
 
+	var container = document.getElementById('popup');
+	var content = document.getElementById('popup-content');
+	var overlay = new ol.Overlay(/** @type {olx.OverlayOptions} */ ({
+		element: container,
+		autoPan: true,
+		autoPanAnimation: {
+			duration: 250
+		}
+	}));
+
 	var map = new ol.Map({
 		layers: [
 			new ol.layer.Tile({
@@ -33,6 +43,7 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 				})
 			})
 		],
+		overlays: [overlay],
 		renderer: exampleNS.getRendererFromQueryString(),
 		target: 'map',
 		view: view
@@ -47,6 +58,18 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 		}, function (err) {
 			console.log(err)
 		});
+
+	recipeService.search("", 0).then(function(results){
+		var position = results[0].location.split(",");
+		var long = parseFloat(position[1]).toFixed(2);
+		var lat = parseFloat(position[0]).toFixed(2);
+
+		console.log(long, lat)
+		var pos = ol.proj.transform([long, 34.216151], 'EPSG:4326', 'EPSG:3857');
+		console.log(pos);
+		content.innerHTML = "<p>Hello World</p>";
+		overlay.setPosition(pos);
+	});
 })
 
 .controller('ChatsCtrl', function($scope, $http, recipeService) {
