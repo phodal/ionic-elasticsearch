@@ -3,7 +3,7 @@ angular.module('starter.services', [])
 .factory('recipeService',
   ['$q', 'esFactory', '$location', function($q, elasticsearch, $location){
     var client = elasticsearch({
-      host: "es.phodal.com/"
+      host: $location.host() + ":9200"
     });
 
     /**
@@ -14,16 +14,12 @@ angular.module('starter.services', [])
     var search = function(term, offset){
       var deferred = $q.defer();
       var query = {
-        "match": {
-          "_all": term
-        }
+        "match_all": {}
       };
 
       client.search({
         "index": 'haystack',
         "body": {
-          "size": 10,
-          "from": (offset || 0) * 10,
           "query": query
         }
       }).then(function(result) {

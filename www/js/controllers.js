@@ -49,9 +49,10 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 		});
 })
 
-.controller('ChatsCtrl', function($scope, recipeService) {
+.controller('ChatsCtrl', function($scope, $http, recipeService) {
 	$scope.results = [];
 	recipeService.search("", 0).then(function(results){
+		console.log(results);
 		$scope.results = results;
 	});
 })
