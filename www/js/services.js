@@ -7,11 +7,6 @@ angular.module('starter.services', [])
       //host: "http://es.phodal.com/"
     });
 
-    /**
-     * Given a term and an offset, load another round of 10 recipes.
-     *
-     * Returns a promise.
-     */
     var search = function(term, offset){
       var deferred = $q.defer();
       var query = {

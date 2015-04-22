@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 
-.controller('DashCtrl', function($scope, $cordovaGeolocation, $http, recipeService) {
+.controller('MapCtrl', function($scope, $cordovaGeolocation, $http, recipeService) {
 	var exampleNS = {};
 
 	exampleNS.getRendererFromQueryString = function() {
