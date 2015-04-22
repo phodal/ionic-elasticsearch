@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['elasticsearch'])
 
 .controller('DashCtrl', function($scope) {
 	var exampleNS = {};
@@ -48,11 +48,11 @@ angular.module('starter.controllers', [])
 	});
 })
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  }
+.controller('ChatsCtrl', function($scope, recipeService) {
+	$scope.results = [];
+	recipeService.search("", 0).then(function(results){
+		$scope.results = results;
+	});
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
