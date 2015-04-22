@@ -55,17 +55,17 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 		$.each(results, function(index, result){
 			console.log(index);
 
-			for (var i=0;i<50;i++){
+			var position = result.location.split(",");
+			var pos = ol.proj.transform([parseFloat(position[1]), parseFloat(position[0])], 'EPSG:4326', 'EPSG:3857');
 
-				var iconFeature = new ol.Feature({
-					geometry: new
-						ol.geom.Point(ol.proj.transform([Math.random()*360-180, Math.random()*180-90], 'EPSG:4326',   'EPSG:3857')),
-					name: 'Null Island ' + i,
+
+			var iconFeature = new ol.Feature({
+					geometry: new ol.geom.Point(pos),
+					name: result.title,
 					population: 4000,
 					rainfall: 500
-				});
-				vectorSource.addFeature(iconFeature);
-			}
+			});
+			vectorSource.addFeature(iconFeature);
 		});
 
 		var iconStyle = new ol.style.Style({
