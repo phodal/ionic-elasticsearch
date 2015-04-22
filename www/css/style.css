@@ -1,1 +1,16 @@
-/* Empty. Add your own CSS if you like */
+
+html, body, .map {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.scroll-content > .scroll {
+    height: 100%;
+}
+.scroll-content > .scroll > iframe {
+    min-height: 100%;
+}
+
+.scroll{height: 100%;}
