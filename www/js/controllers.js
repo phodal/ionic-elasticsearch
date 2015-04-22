@@ -19,32 +19,33 @@ angular.module('starter.controllers', [])
 		}
 	};
 
+	var view = new ol.View({
+		center: [0, 0],
+		zoom: 2
+	});
+
 	var map = new ol.Map({
 		layers: [
 			new ol.layer.Tile({
-				source: new ol.source.OSM()
+				source: new ol.source.BingMaps({
+					key: 'Ak-dzM4wZjSqTlzveKz5u0d4IQ4bRzVI309GxmkgSVr1ewS6iPSrOvOKhA-CJlm3',
+					imagerySet: 'Road'
+				})
 			})
 		],
 		renderer: exampleNS.getRendererFromQueryString(),
 		target: 'map',
-		controls: ol.control.defaults({
-			attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
-				collapsible: false
-			})
-		}),
-		view: new ol.View({
-			center: ol.proj.transform([5.8713, 45.6452], 'EPSG:4326', 'EPSG:3857'),
-			zoom: 13
-		})
+		view: view
 	});
 
-	jQuery('#map').after('<button type="button" ' +
-	'onclick="map.getView().setZoom(map.getView().getZoom() - 1);">' +
-	'Zoom out</button>');
-	jQuery('#map').after('<button type="button" ' +
-	'onclick="map.getView().setZoom(map.getView().getZoom() + 1);">' +
-	'Zoom in</button>');
-
+	var geolocation = new ol.Geolocation({
+		projection: view.getProjection(),
+		tracking: true
+	});
+	geolocation.once('change:position', function() {
+		view.setCenter(geolocation.getPosition());
+		view.setResolution(2.388657133911758);
+	});
 })
 
 .controller('ChatsCtrl', function($scope, Chats) {
