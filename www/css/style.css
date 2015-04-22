@@ -39,3 +39,6 @@ html, body, .map {
     height: auto;
 }
 
+.location_info {
+    font-size: 12px;
+}
