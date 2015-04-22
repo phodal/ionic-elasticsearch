@@ -3,8 +3,8 @@ angular.module('starter.services', [])
 .factory('recipeService',
   ['$q', 'esFactory', '$location', function($q, elasticsearch, $location){
     var client = elasticsearch({
-      host: $location.host() + ":9200"
-      //host: "http://es.phodal.com/"
+      //host: $location.host() + ":9200"
+      host: "http://es.phodal.com/"
     });
 
     var search = function(term, offset){
