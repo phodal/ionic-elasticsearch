@@ -11,7 +11,7 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 			new ol.layer.Tile({
 				source: new ol.source.BingMaps({
 					key: 'Ak-dzM4wZjSqTlzveKz5u0d4IQ4bRzVI309GxmkgSVr1ewS6iPSrOvOKhA-CJlm3',
-					culture: 'zh-Hans',
+					culture: 'zh-CN',
 					imagerySet: 'Road'
 				})
 			})
@@ -107,10 +107,6 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 	});
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams) {
-
-})
-
 .controller('SearchCtrl', function($scope, ESService) {
 	$scope.query = "";
 	var doSearch = ionic.debounce(function(query) {
@@ -124,7 +120,7 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 	}
 })
 
-.controller('AccountCtrl', function($scope) {
+.controller('CreateCtrl', function($scope) {
   $scope.settings = {
     enableFriends: true
   };
