@@ -4,8 +4,6 @@
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.0.0-rc.4",
     "elasticsearch": "~4.0.2",
-    "ngCordova": "~0.1.14-alpha",
-    "proj4": "~2.3.6",
-    "bootstrap": "~3.3.4"
+    "ngCordova": "~0.1.14-alpha"
   }
 }

@@ -120,8 +120,25 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 	}
 })
 
-.controller('CreateCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+.controller('CreateCtrl', function($scope, $http, $localstorage) {
+	$scope.data = {};
+	$scope.info = {};
+
+	$scope.newPost = function() {
+		$localstorage.setObject('data', $scope.data);
+		$http({
+			method: 'POST',
+			url: 'http://127.0.0.1:8000/api/all/',
+			data: $scope.data,
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			success: function(data) {
+				$scope.info = data;
+				console.log(data);
+			},
+			error: function(data) {
+				$scope.info = data;
+				console.log(data);
+			}
+		});
+	}
 });
