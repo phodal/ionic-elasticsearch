@@ -1,24 +1,6 @@
 angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 
-.controller('MapCtrl', function($scope, $cordovaGeolocation, $http, recipeService) {
-	var exampleNS = {};
-
-	exampleNS.getRendererFromQueryString = function() {
-		var obj = {}, queryString = location.search.slice(1),
-			re = /([^&=]+)=([^&]*)/g, m;
-
-		while (m = re.exec(queryString)) {
-			obj[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
-		}
-		if ('renderers' in obj) {
-			return obj['renderers'].split(',');
-		} else if ('renderer' in obj) {
-			return [obj['renderer']];
-		} else {
-			return undefined;
-		}
-	};
-
+.controller('MapCtrl', function($scope, $cordovaGeolocation, $http, recipeService, NSService) {
 	var view = new ol.View({
 		center: [0, 0],
 		zoom: 2
@@ -35,7 +17,7 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 				})
 			})
 		],
-		renderer: exampleNS.getRendererFromQueryString(),
+		renderer: NSService.exampleNS.getRendererFromQueryString(),
 		target: 'map',
 		view: view
 	});

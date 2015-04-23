@@ -3,8 +3,8 @@ angular.module('starter.services', [])
 .factory('recipeService',
   ['$q', 'esFactory', '$location', function($q, elasticsearch, $location){
     var client = elasticsearch({
-      //host: $location.host() + ":9200"
-      host: "http://es.phodal.com/"
+      host: $location.host() + ":9200"
+      //host: "http://es.phodal.com/"
     });
 
     var search = function(term, offset){
@@ -36,4 +36,26 @@ angular.module('starter.services', [])
     };
   }]
 )
-;
+.factory('NSService', function(){
+      var exampleNS = {};
+
+      exampleNS.getRendererFromQueryString = function() {
+        var obj = {}, queryString = location.search.slice(1),
+            re = /([^&=]+)=([^&]*)/g, m;
+
+        while (m = re.exec(queryString)) {
+          obj[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+        }
+        if ('renderers' in obj) {
+          return obj['renderers'].split(',');
+        } else if ('renderer' in obj) {
+          return [obj['renderer']];
+        } else {
+          return undefined;
+        }
+      };
+
+      return {
+        "exampleNS": exampleNS
+      };
+});
