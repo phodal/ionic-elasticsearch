@@ -108,6 +108,10 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
+.controller('SearchCtrl', function($scope) {
+
+})
+
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
     enableFriends: true
