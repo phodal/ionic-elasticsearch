@@ -99,19 +99,21 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 
 .controller('ListsCtrl', function($scope, $http, ESService) {
 	$scope.results = [];
-		ESService.search("", 0).then(function(results){
+	ESService.search("", 0).then(function(results){
 		$scope.results = results;
 	});
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+.controller('ChatDetailCtrl', function($scope, $stateParams) {
+
 })
 
-.controller('SearchCtrl', function($scope) {
+.controller('SearchCtrl', function($scope, ESService) {
 	$scope.query = "";
 	var doSearch = ionic.debounce(function(query) {
-
+		ESService.search(query, 0).then(function(results){
+			$scope.results = results;
+		});
 	}, 500);
 
 	$scope.search = function(query) {
