@@ -6,8 +6,6 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 		zoom: 2
 	});
 
-	var content = document.getElementById('popup-content');
-
 	var map = new ol.Map({
 		layers: [
 			new ol.layer.Tile({
@@ -87,7 +85,9 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 				$(element).popover({
 					'placement': 'top',
 					'html': true,
-					'content': "商品:" + feature.get('name') + "<br/>" + "联系方式:" + feature.get('phone')
+					'content': "<h3>商品:" + feature.get('name') + "</h3>" + '' +
+					'<div class="button icon-left ion-ios-telephone button-calm button-outline">' +
+					'<a ng-href="tel: {{result.phone_number}}">' + feature.get('phone') + '</a> </div>'
 				});
 				$(element).popover('show');
 			} else {
