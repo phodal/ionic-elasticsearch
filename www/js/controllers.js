@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 
-.controller('MapCtrl', function($scope, $cordovaGeolocation, $http, ESService, NSService) {
+.controller('MapCtrl', function($scope, $cordovaGeolocation, $http, ESService, NSService, $localstorage) {
 	var view = new ol.View({
 		center: [0, 0],
 		zoom: 2
@@ -24,6 +24,7 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 	$cordovaGeolocation
 		.getCurrentPosition(posOptions)
 		.then(function (position) {
+			$localstorage.set('position', [position.coords.latitude, position.coords.longitude].toString());
 			view.setCenter(ol.proj.transform([position.coords.longitude, position.coords.latitude], 'EPSG:4326', 'EPSG:3857'));
 			view.setResolution(1000.0);
 		}, function (err) {

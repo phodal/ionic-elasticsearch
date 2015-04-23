@@ -1,14 +1,14 @@
-angular.module('starter.services', [])
+angular.module('starter.services', ['ngCordova', 'elasticsearch'])
 
 .factory('ESService',
-  ['$q', 'esFactory', '$location', function($q, elasticsearch, $location){
+  ['$q', 'esFactory', '$location', '$localstorage', function($q, elasticsearch, $location, $localstorage){
     var client = elasticsearch({
       host: $location.host() + ":9200"
       //host: "http://es.phodal.com/"
     });
 
     var search = function(term, offset){
-      var deferred = $q.defer(), query;
+      var deferred = $q.defer(), query, sort;
       if(!term){
         query = {
           "match_all": {}
@@ -19,10 +19,24 @@ angular.module('starter.services', [])
         }
       }
 
+      var position = $localstorage.get('position');
+
+      if(position){
+        sort = [{
+          "_geo_distance": {
+            "location": position,
+            "unit": "km"
+          }
+        }];
+      } else {
+        sort = [];
+      }
+
       client.search({
         "index": 'haystack',
         "body": {
-          "query": query
+          "query": query,
+          "sort": sort
         }
       }).then(function(result) {
         var ii = 0, hits_in, hits_out = [];
@@ -64,4 +78,21 @@ angular.module('starter.services', [])
       return {
         "exampleNS": exampleNS
       };
-});
+})
+
+.factory('$localstorage', ['$window', function($window) {
+  return {
+    set: function(key, value) {
+      $window.localStorage[key] = value;
+    },
+    get: function(key, defaultValue) {
+      return $window.localStorage[key] || defaultValue;
+    },
+    setObject: function(key, value) {
+      $window.localStorage[key] = JSON.stringify(value);
+    },
+    getObject: function(key) {
+      return JSON.parse($window.localStorage[key] || '{}');
+    }
+  }
+}]);
