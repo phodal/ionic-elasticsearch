@@ -1,5 +1,12 @@
-<ion-view view-title="搜索">
+<ion-view view-title="搜索" ng-controller="SearchCtrl">
     <ion-content>
-
+        <div id="search-bar">
+            <div class="item item-input-inset">
+                <label class="item-input-wrapper" id="search-input">
+                    <i class="icon ion-search placeholder-icon"></i>
+                    <input type="search" placeholder="Search" ng-model="query" ng-change="search(query)" autocorrect="off">
+                </label>
+            </div>
+        </div>
     </ion-content>
 </ion-view>

@@ -109,9 +109,16 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 })
 
 .controller('SearchCtrl', function($scope) {
+	$scope.query = "";
+	var doSearch = ionic.debounce(function(query) {
 
+	}, 500);
+
+	$scope.search = function(query) {
+		doSearch(query);
+	}
 })
-
+	
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
     enableFriends: true
