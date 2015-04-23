@@ -34,7 +34,6 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 	ESService.search("", 0).then(function(results){
 		var vectorSource = new ol.source.Vector({ });
 		$.each(results, function(index, result){
-			console.log(result);
 			var position = result.location.split(",");
 			var pos = ol.proj.transform([parseFloat(position[1]), parseFloat(position[0])], 'EPSG:4326', 'EPSG:3857');
 

@@ -43,7 +43,11 @@ angular.module('starter.services', ['ngCordova', 'elasticsearch'])
         hits_in = (result.hits || {}).hits || [];
         for(;ii < hits_in.length; ii++){
           var data = hits_in[ii]._source;
-          angular.extend(data, {"distance": parseFloat(hits_in[ii].sort[0]).toFixed(1)});
+          var distance = {};
+          if(hits_in[ii].sort){
+            distance = {"distance": parseFloat(hits_in[ii].sort[0]).toFixed(1)}
+          }
+          angular.extend(data, distance);
           hits_out.push(data);
         }
         deferred.resolve(hits_out);
