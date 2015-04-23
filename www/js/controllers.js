@@ -34,14 +34,15 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 	ESService.search("", 0).then(function(results){
 		var vectorSource = new ol.source.Vector({ });
 		$.each(results, function(index, result){
+			console.log(result);
 			var position = result.location.split(",");
 			var pos = ol.proj.transform([parseFloat(position[1]), parseFloat(position[0])], 'EPSG:4326', 'EPSG:3857');
-
 
 			var iconFeature = new ol.Feature({
 					geometry: new ol.geom.Point(pos),
 					name: result.title,
 					phone: result.phone_number,
+					distance: result.distance,
 					population: 4000,
 					rainfall: 500
 			});
@@ -86,9 +87,10 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 				$(element).popover({
 					'placement': 'top',
 					'html': true,
-					'content': "<h3>商品:" + feature.get('name') + "</h3>" + '' +
+					'content': "<h4>商品:" + feature.get('name') + "</h4>" + '' +
 					'<div class="button icon-left ion-ios-telephone button-calm button-outline">' +
-					'<a ng-href="tel: {{result.phone_number}}">' + feature.get('phone') + '</a> </div>'
+					'<a ng-href="tel: {{result.phone_number}}">' + feature.get('phone') + '</a> </div>' +
+						"<p class='icon-left ion-ios-navigate'> " + feature.get('distance') + "公里</p>"
 				});
 				$(element).popover('show');
 			} else {
