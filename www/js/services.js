@@ -8,10 +8,16 @@ angular.module('starter.services', [])
     });
 
     var search = function(term, offset){
-      var deferred = $q.defer();
-      var query = {
-        "match_all": {}
-      };
+      var deferred = $q.defer(), query;
+      if(!term){
+        query = {
+          "match_all": {}
+        };
+      } else {
+        query = {
+          match: { title: term }
+        }
+      }
 
       client.search({
         "index": 'haystack',
