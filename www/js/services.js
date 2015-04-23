@@ -1,6 +1,6 @@
 angular.module('starter.services', [])
 
-.factory('recipeService',
+.factory('ESService',
   ['$q', 'esFactory', '$location', function($q, elasticsearch, $location){
     var client = elasticsearch({
       host: $location.host() + ":9200"

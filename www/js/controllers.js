@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 
-.controller('MapCtrl', function($scope, $cordovaGeolocation, $http, recipeService, NSService) {
+.controller('MapCtrl', function($scope, $cordovaGeolocation, $http, ESService, NSService) {
 	var view = new ol.View({
 		center: [0, 0],
 		zoom: 2
@@ -30,7 +30,7 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 			console.log(err)
 		});
 
-	recipeService.search("", 0).then(function(results){
+	ESService.search("", 0).then(function(results){
 		var vectorSource = new ol.source.Vector({ });
 		$.each(results, function(index, result){
 			var position = result.location.split(",");
@@ -97,9 +97,9 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 	});
 })
 
-.controller('ListsCtrl', function($scope, $http, recipeService) {
+.controller('ListsCtrl', function($scope, $http, ESService) {
 	$scope.results = [];
-	recipeService.search("", 0).then(function(results){
+		ESService.search("", 0).then(function(results){
 		$scope.results = results;
 	});
 })
@@ -118,7 +118,7 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 		doSearch(query);
 	}
 })
-	
+
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
     enableFriends: true
