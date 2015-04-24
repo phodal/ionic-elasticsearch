@@ -143,18 +143,22 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 
 		var res = $http.post(url, $scope.data);
 		res.success(function(data, status, headers, config) {
-			$scope.showAlert = function() {
-				var alertPopup = $ionicPopup.alert({
-					title: '创建成功',
-					template: '标题' + data.title + '; 简介' + data.body
-				});
-				alertPopup.then(function(res) {
-					console.log('Thank you for not eating my delicious ice cream cone');
-				});
-			};
+			var alertPopup = $ionicPopup.alert({
+				title: '创建成功',
+				template: '标题' + data.title + '; 简介' + data.body
+			});
+			alertPopup.then(function(res) {
+				console.log('Thank you for not eating my delicious ice cream cone');
+			});
 		});
 		res.error(function(data, status, headers, config) {
-			$scope.info = data;
+			var alertPopup = $ionicPopup.alert({
+				title: '出错了~~',
+				template: ''
+			});
+			alertPopup.then(function(res) {
+				console.log('Thank you for not eating my delicious ice cream cone');
+			});
 		});
 	}
 });
