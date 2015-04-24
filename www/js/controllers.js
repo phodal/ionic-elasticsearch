@@ -1,14 +1,14 @@
 angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 
 .controller('MapCtrl', function($scope, $cordovaGeolocation, $http, ESService, NSService, $localstorage) {
-	var map_center = [0, 0];
+	var map_center = [12119653.781323666,4054689.6824535457];
 	if($localstorage.get('map_center')) {
 		var mapCenter = $localstorage.get('map_center').split(",");
 		map_center = [mapCenter[0], mapCenter[1]];
 	}
 	var view = new ol.View({
 		center: map_center,
-		zoom: 3
+		zoom: 4
 	});
 
 	var controls = ol.control.defaults({rotate: false});
@@ -31,7 +31,7 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 		view: view
 	});
 
-	var posOptions = {timeout: 10000, enableHighAccuracy: false};
+	var posOptions = {timeout: 10000, enableHighAccuracy: true};
 	$cordovaGeolocation
 		.getCurrentPosition(posOptions)
 		.then(function (position) {
