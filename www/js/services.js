@@ -15,7 +15,10 @@ angular.module('starter.services', ['ngCordova', 'elasticsearch'])
         };
       } else {
         query = {
-          match: { title: term }
+          multi_match: {
+            query: term ,
+            fields:['shop_name', 'shop_category', 'shop_tags']
+          }
         }
       }
 
