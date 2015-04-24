@@ -138,19 +138,15 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 
 	$scope.newPost = function() {
 		$localstorage.setObject('data', $scope.data);
-		$http({
-			method: 'POST',
-			url: 'http://127.0.0.1:8000/api/all/',
-			data: $scope.data,
-			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-			success: function(data) {
-				$scope.info = data;
-				console.log(data);
-			},
-			error: function(data) {
-				$scope.info = data;
-				console.log(data);
-			}
+		var url = "http://nx2.phodal.com/api/all/";
+		//var url = "http://localhost:8000/api/all/";
+		
+		var res = $http.post(url, $scope.data);
+		res.success(function(data, status, headers, config) {
+			$scope.info = data;
+		});
+		res.error(function(data, status, headers, config) {
+			$scope.info = data;
 		});
 	}
 });
