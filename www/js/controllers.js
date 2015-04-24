@@ -138,8 +138,8 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 
 	$scope.newPost = function() {
 		$localstorage.setObject('data', $scope.data);
-		var url = "http://nx2.phodal.com/api/all/";
-		//var url = "http://localhost:8000/api/all/";
+		//var url = "http://nx2.phodal.com/api/all/";
+		var url = "http://localhost:8000/api/all/";
 
 		var res = $http.post(url, $scope.data);
 		res.success(function(data, status, headers, config) {
@@ -152,9 +152,14 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 			});
 		});
 		res.error(function(data, status, headers, config) {
+			var keys = [];
+			$.each(data, function(key, element) {
+				keys.push(key);
+			});
+
 			var alertPopup = $ionicPopup.alert({
-				title: '出错了~~',
-				template: ''
+				title: '请填写下面的字段',
+				template: keys.toString()
 			});
 			alertPopup.then(function(res) {
 				console.log('Thank you for not eating my delicious ice cream cone');
