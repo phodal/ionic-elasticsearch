@@ -22,18 +22,19 @@ angular.module('starter.services', ['ngCordova', 'elasticsearch'])
       var position = $localstorage.get('position');
 
       if(position){
-        sort = [{
-          "_geo_distance": {
-            "location": position,
-            "unit": "km"
-          }
-        }];
+        //sort = [{
+        //  "_geo_distance": {
+        //    "location": position,
+        //    "unit": "km"
+        //  }
+        //}];
       } else {
         sort = [];
       }
 
       client.search({
-        "index": 'haystack',
+        "index": 'dianping',
+        "size": 500,
         "body": {
           "query": query,
           "sort": sort

@@ -1,14 +1,14 @@
 angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 
 .controller('MapCtrl', function($scope, $cordovaGeolocation, $http, ESService, NSService, $localstorage) {
-	var map_center = [12119653.781323666,4054689.6824535457];
+	var map_center = [12119653.781323666,4064689.6824535457];
 	if($localstorage.get('map_center')) {
 		var mapCenter = $localstorage.get('map_center').split(",");
 		map_center = [mapCenter[0], mapCenter[1]];
 	}
 	var view = new ol.View({
 		center: map_center,
-		zoom: 4
+		zoom: 12
 	});
 
 	var controls = ol.control.defaults({rotate: false});
@@ -31,20 +31,20 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 		view: view
 	});
 
-	var posOptions = {timeout: 10000, enableHighAccuracy: true};
-	$cordovaGeolocation
-		.getCurrentPosition(posOptions)
-		.then(function (position) {
-			var pos = new ol.proj.transform([position.coords.longitude, position.coords.latitude], 'EPSG:4326', 'EPSG:3857');
-
-			$localstorage.set('position', [position.coords.latitude, position.coords.longitude].toString());
-			$localstorage.set('map_center', pos);
-
-			view.setCenter(pos);
-			view.setResolution(1000.0);
-		}, function (err) {
-			console.log(err)
-		});
+	//var posOptions = {timeout: 10000, enableHighAccuracy: true};
+	//$cordovaGeolocation
+	//	.getCurrentPosition(posOptions)
+	//	.then(function (position) {
+	//		var pos = new ol.proj.transform([position.coords.longitude, position.coords.latitude], 'EPSG:4326', 'EPSG:3857');
+	//
+	//		$localstorage.set('position', [position.coords.latitude, position.coords.longitude].toString());
+	//		$localstorage.set('map_center', pos);
+	//
+	//		view.setCenter(pos);
+	//		view.setResolution(1000.0);
+	//	}, function (err) {
+	//		console.log(err)
+	//	});
 
 	ESService.search("", 0).then(function(results){
 		var vectorSource = new ol.source.Vector({ });
@@ -54,8 +54,8 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 
 			var iconFeature = new ol.Feature({
 					geometry: new ol.geom.Point(pos),
-					name: result.title,
-					phone: result.phone_number,
+					name: result.shop_name,
+					phone: result.shop_tel[0],
 					distance: result.distance
 			});
 			vectorSource.addFeature(iconFeature);
@@ -99,7 +99,7 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 				$(element).popover({
 					'placement': 'top',
 					'html': true,
-					'content': "<h4>商品:" + feature.get('name') + "</h4>" + '' +
+					'content': "<h4>" + feature.get('name') + "</h4>" + '' +
 					'<div class="button icon-left ion-ios-telephone button-calm button-outline">' +
 					'<a ng-href="tel: {{result.phone_number}}">' + feature.get('phone') + '</a> </div>' +
 						"<p class='icon-left ion-ios-navigate'> " + feature.get('distance') + "公里</p>"
