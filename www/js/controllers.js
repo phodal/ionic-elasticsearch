@@ -56,9 +56,7 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 					geometry: new ol.geom.Point(pos),
 					name: result.title,
 					phone: result.phone_number,
-					distance: result.distance,
-					population: 4000,
-					rainfall: 500
+					distance: result.distance
 			});
 			vectorSource.addFeature(iconFeature);
 		});
