@@ -132,7 +132,7 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 	}
 })
 
-.controller('CreateCtrl', function($scope, $http, $localstorage) {
+.controller('CreateCtrl', function($scope, $http, $localstorage, $ionicPopup) {
 	$scope.data = {};
 	$scope.info = {};
 
@@ -140,10 +140,18 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 		$localstorage.setObject('data', $scope.data);
 		var url = "http://nx2.phodal.com/api/all/";
 		//var url = "http://localhost:8000/api/all/";
-		
+
 		var res = $http.post(url, $scope.data);
 		res.success(function(data, status, headers, config) {
-			$scope.info = data;
+			$scope.showAlert = function() {
+				var alertPopup = $ionicPopup.alert({
+					title: '创建成功',
+					template: '标题' + data.title + '; 简介' + data.body
+				});
+				alertPopup.then(function(res) {
+					console.log('Thank you for not eating my delicious ice cream cone');
+				});
+			};
 		});
 		res.error(function(data, status, headers, config) {
 			$scope.info = data;
