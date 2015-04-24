@@ -6,7 +6,12 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 		zoom: 2
 	});
 
+	var controls = ol.control.defaults({rotate: false});
+	var interactions = ol.interaction.defaults({altShiftDragRotate:false, pinchRotate:false});
+
 	var map = new ol.Map({
+		controls: controls,
+		interactions: interactions,
 		layers: [
 			new ol.layer.Tile({
 				source: new ol.source.BingMaps({
