@@ -130,40 +130,4 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 	$scope.search = function(query) {
 		doSearch(query);
 	}
-})
-
-.controller('CreateCtrl', function($scope, $http, $localstorage, $ionicPopup) {
-	$scope.data = {};
-	$scope.info = {};
-
-	$scope.newPost = function() {
-		$localstorage.setObject('data', $scope.data);
-		//var url = "http://nx2.phodal.com/api/all/";
-		var url = "http://localhost:8000/api/all/";
-
-		var res = $http.post(url, $scope.data);
-		res.success(function(data, status, headers, config) {
-			var alertPopup = $ionicPopup.alert({
-				title: '创建成功',
-				template: '标题' + data.title + '; 简介' + data.body
-			});
-			alertPopup.then(function(res) {
-				console.log('Thank you for not eating my delicious ice cream cone');
-			});
-		});
-		res.error(function(data, status, headers, config) {
-			var keys = [];
-			$.each(data, function(key, element) {
-				keys.push(key);
-			});
-
-			var alertPopup = $ionicPopup.alert({
-				title: '请填写下面的字段',
-				template: keys.toString()
-			});
-			alertPopup.then(function(res) {
-				console.log('Thank you for not eating my delicious ice cream cone');
-			});
-		});
-	}
 });

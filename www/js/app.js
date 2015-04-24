@@ -59,16 +59,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     })
 
-  .state('tab.create', {
-    url: '/create',
-    views: {
-      'tab-create': {
-        templateUrl: 'templates/tab-create.html',
-        controller: 'CreateCtrl'
-      }
-    }
-  });
-
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/map');
 
