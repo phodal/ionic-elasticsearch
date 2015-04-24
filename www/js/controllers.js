@@ -35,9 +35,12 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 	$cordovaGeolocation
 		.getCurrentPosition(posOptions)
 		.then(function (position) {
+			var pos = new ol.proj.transform([position.coords.longitude, position.coords.latitude], 'EPSG:4326', 'EPSG:3857');
+
 			$localstorage.set('position', [position.coords.latitude, position.coords.longitude].toString());
-			$localstorage.set('map_center', ol.proj.transform([position.coords.longitude, position.coords.latitude], 'EPSG:4326', 'EPSG:3857'));
-			view.setCenter(ol.proj.transform([position.coords.longitude, position.coords.latitude], 'EPSG:4326', 'EPSG:3857'));
+			$localstorage.set('map_center', pos);
+
+			view.setCenter(pos);
 			view.setResolution(1000.0);
 		}, function (err) {
 			console.log(err)
