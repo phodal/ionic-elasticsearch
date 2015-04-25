@@ -2,6 +2,21 @@
 
 > A Demo of ElasticSearch, Django, Ionic
 
+##Run
+
+###setup
+
+    bower install & npm install
+
+###Browser
+
+    ionic serve
+    
+###Android\iOS 
+    
+    ionic run android 
+    ionic run ios    
+
 ##Tech
 
 - ElasticSearch
