@@ -142,7 +142,7 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 		var url = "http://localhost:8000/api/all/";
 
 		var res = $http.post(url, $scope.data);
-		res.success(function(data, status, headers, config) {
+		res.success(function (data) {
 			var alertPopup = $ionicPopup.alert({
 				title: '创建成功',
 				template: '标题' + data.title + '; 简介' + data.body
@@ -151,9 +151,9 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 				console.log('Thank you for not eating my delicious ice cream cone');
 			});
 		});
-		res.error(function(data, status, headers, config) {
+		res.error(function (data) {
 			var keys = [];
-			$.each(data, function(key, element) {
+			$.each(data, function (key) {
 				keys.push(key);
 			});
 
