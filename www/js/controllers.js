@@ -31,20 +31,20 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 		view: view
 	});
 
-	//var posOptions = {timeout: 10000, enableHighAccuracy: true};
-	//$cordovaGeolocation
-	//	.getCurrentPosition(posOptions)
-	//	.then(function (position) {
-	//		var pos = new ol.proj.transform([position.coords.longitude, position.coords.latitude], 'EPSG:4326', 'EPSG:3857');
-	//
-	//		$localstorage.set('position', [position.coords.latitude, position.coords.longitude].toString());
-	//		$localstorage.set('map_center', pos);
-	//
-	//		view.setCenter(pos);
-	//		view.setResolution(1000.0);
-	//	}, function (err) {
-	//		console.log(err)
-	//	});
+	var posOptions = {timeout: 10000, enableHighAccuracy: true};
+	$cordovaGeolocation
+		.getCurrentPosition(posOptions)
+		.then(function (position) {
+			var pos = new ol.proj.transform([position.coords.longitude, position.coords.latitude], 'EPSG:4326', 'EPSG:3857');
+
+			$localstorage.set('position', [position.coords.latitude, position.coords.longitude].toString());
+			$localstorage.set('map_center', pos);
+
+			view.setCenter(pos);
+			view.setResolution(1000.0);
+		}, function (err) {
+			console.log(err)
+		});
 
 	ESService.search("", 0).then(function(results){
 		var vectorSource = new ol.source.Vector({ });
