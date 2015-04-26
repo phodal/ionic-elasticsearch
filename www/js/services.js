@@ -21,25 +21,12 @@ angular.module('starter.services', ['ngCordova', 'elasticsearch'])
           }
         }
       }
-
-      var position = $localstorage.get('position');
-      if(position){
-        sort = [{
-          "_geo_distance": {
-            "location": position,
-            "unit": "km"
-          }
-        }];
-      } else {
-        sort = [];
-      }
-
+      
       client.search({
         "index": 'dianping',
         "size": 500,
         "body": {
-          "query": query,
-          "sort": sort
+          "query": query
         }
       }).then(function(result) {
         var ii = 0, hits_in, hits_out = [];
