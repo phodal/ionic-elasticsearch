@@ -41,7 +41,6 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 			$localstorage.set('map_center', pos);
 
 			view.setCenter(pos);
-			view.setResolution(1000.0);
 		}, function (err) {
 			console.log(err)
 		});
