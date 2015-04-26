@@ -2,6 +2,10 @@
 
 > A Demo of ElasticSearch, Django, Ionic
 
+##Struct
+
+![Struct](https://raw.github.com/phodal/ionic-elasticsearch/doc/struct.png)
+
 ##Run
 
 ###setup
