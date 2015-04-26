@@ -4,7 +4,7 @@
 
 ##Struct
 
-![Struct](https://raw.github.com/phodal/ionic-elasticsearch/doc/struct.png)
+![Struct](./doc/struct.png)
 
 ##Run
 
