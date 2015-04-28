@@ -33,7 +33,7 @@ angular.module('starter.services', ['ngCordova', 'elasticsearch'])
       }
 
       client.search({
-        "index": 'haystack',
+        "index": 'django',
         "body": {
           "query": query,
           "sort": sort
