@@ -2,7 +2,7 @@
   "name": "nx2-app",
   "private": "true",
   "devDependencies": {
-    "ionic": "driftyco/ionic-bower#1.0.0-rc.4",
+    "ionic": "driftyco/ionic-bower#1.0.0-rc.5",
     "elasticsearch": "~4.0.2",
     "ngCordova": "~0.1.15-alpha"
   }
