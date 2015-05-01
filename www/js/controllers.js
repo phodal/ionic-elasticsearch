@@ -99,8 +99,7 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 					'placement': 'top',
 					'html': true,
 					'content': "<h4>商品:" + feature.get('name') + "</h4>" + '' +
-					'<div class="button icon-left ion-ios-telephone button-calm button-outline">' +
-					'<a ng-href="tel: {{result.phone_number}}">' + feature.get('phone') + '</a> </div>' +
+					'<a ng-href="tel: {{result.phone_number}}" class="button button-calm button-outline icon-left ion-ios-telephone">' + feature.get('phone') + '</a>' +
 						"<p class='icon-left ion-ios-navigate'> " + feature.get('distance') + "公里</p>"
 				});
 				$(element).popover('show');

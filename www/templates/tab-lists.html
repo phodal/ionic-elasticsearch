@@ -7,9 +7,7 @@
                 <div class="icon-left ion-ios-home location_info">
                     {{result.distance}} 公里 | {{result.location_info}}
                 </div>
-                <div class="button icon-left ion-ios-telephone button-calm button-outline">
-                    <a ng-href="tel: {{result.phone_number}}">{{result.phone_number}}</a>
-                </div>
+                <a ng-href="tel: {{result.phone_number}}" class="button button-calm button-outline icon-left ion-ios-telephone ">{{result.phone_number}}</a>
             </ion-item>
         </ion-list>
     </ion-content>
