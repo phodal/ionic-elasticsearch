@@ -13,6 +13,11 @@
  
 Visit: [https://github.com/phodal/django-elasticsearch](https://github.com/phodal/django-elasticsearch)
 
+##Screenshot
+
+![Django Ionic ScreenShot](./screenshots/1.jpg)
+![Django Ionic ScreenShot](./screenshots/2.jpg)
+
 
 ##Document
 
