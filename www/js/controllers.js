@@ -110,11 +110,26 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 	});
 })
 
-.controller('ListsCtrl', function($scope, $http, ESService) {
+.controller('ListsCtrl', function($scope, $http, ESService, $cordovaGeolocation, $localstorage) {
 	$scope.results = [];
-	ESService.search("", 0).then(function(results){
-		$scope.results = results;
-	});
+
+	var posOptions = {timeout: 10000, enableHighAccuracy: true};
+	$cordovaGeolocation
+		.getCurrentPosition(posOptions)
+		.then(function (position) {
+			var pos = new ol.proj.transform([position.coords.longitude, position.coords.latitude], 'EPSG:4326', 'EPSG:3857');
+
+			$localstorage.set('position', [position.coords.latitude, position.coords.longitude].toString());
+			$localstorage.set('map_center', pos);
+
+			ESService.search("", 0).then(function(results){
+				$scope.results = results;
+			});
+		}, function (err) {
+			ESService.search("", 0).then(function(results){
+				$scope.results = results;
+			});
+		});
 })
 
 .controller('SearchCtrl', function($scope, ESService) {
