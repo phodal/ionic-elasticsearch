@@ -25,6 +25,7 @@ angular.module('starter.services', ['ngCordova', 'elasticsearch'])
         sort = [{
           "_geo_distance": {
             "location": position,
+            "order": "asc",
             "unit": "km"
           }
         }];
