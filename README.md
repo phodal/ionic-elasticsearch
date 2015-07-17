@@ -23,7 +23,7 @@ Visit: [https://github.com/phodal/django-elasticsearch](https://github.com/phoda
 
 [Django ElasticSearch Ionic 打造 GIS 移动应用 —— 架构设计](http://www.phodal.com/blog/django-elasticsearch-ionic-build-gis-application/)
 
-[地图移动应用实战 —— Django Haystack ElasticSearch 环境准备](http://www.phodal.com/blog/django-elasticsearch-ionic-build-gis-application/)
+[地图移动应用实战 —— Django Haystack ElasticSearch 环境准备](http://www.phodal.com/blog/django-elasticsearch-haystack-prepare-enviorment/)
 
 [地图移动应用实战 —— 服务端构建](http://www.phodal.com/blog/django-elasticsearch-ionic-build-gis-application-create-model/)
 
