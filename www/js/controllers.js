@@ -151,7 +151,7 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 
 	$scope.newPost = function() {
 		$localstorage.setObject('data', $scope.data);
-		var url = "http://localhost:8000/api/all/";
+		var url = $localstorage.get('api_server');
 
 		var res = $http.post(url, $scope.data);
 		res.success(function (data) {

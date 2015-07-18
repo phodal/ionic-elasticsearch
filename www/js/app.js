@@ -1,12 +1,17 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform,$localstorage) {
   $ionicPlatform.ready(function() {
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }
     if (window.StatusBar) {
       StatusBar.styleLightContent();
+    }
+    if($localstorage.get('api_server') === undefined) {
+      $localstorage.set('api_server', "http://localhost:8000/api/all/");
+      $localstorage.set('es_server', "http://localhost:9200");
+      $localstorage.set('es_index', "django");
     }
   });
 })

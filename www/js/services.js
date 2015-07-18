@@ -3,7 +3,7 @@ angular.module('starter.services', ['ngCordova', 'elasticsearch'])
 .factory('ESService',
   ['$q', 'esFactory', '$location', '$localstorage', function($q, elasticsearch, $location, $localstorage){
     var client = elasticsearch({
-      host: $location.host() + ":9200"
+      host: $localstorage.get('es_server')
     });
 
     var search = function(term, offset){
@@ -33,7 +33,7 @@ angular.module('starter.services', ['ngCordova', 'elasticsearch'])
       }
 
       client.search({
-        "index": 'django',
+        "index": $localstorage.get('es_index'),
         "body": {
           "query": query,
           "sort": sort
