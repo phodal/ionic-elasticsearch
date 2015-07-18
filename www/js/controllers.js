@@ -178,4 +178,14 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 			});
 		});
 	}
+})
+
+.controller('SettingCtrl', function($scope, $state) {
+		$scope.data = {};
+		$scope.setting =  function () {
+			localStorage.setItem('api_server', $scope.data.api_server);
+			localStorage.setItem('es_server', $scope.data.es_server);
+			localStorage.setItem('es_index', $scope.data.es_index);
+			$state.go('tab.lists');
+		}
 });

@@ -1,0 +1,15 @@
+<ion-view view-title="设置">
+  <ion-content>
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="API服务器" ng-model="data.api_server">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="ElasticSearch服务器" ng-model="data.es_server">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="ElasticSearch 字段" ng-model="data.es_index">
+        </label>
+      <button type="submit" class="button button-positive button-block" ng-click="setting()">确定</button>
+  </ion-content>
+</ion-view>

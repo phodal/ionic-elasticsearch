@@ -4,7 +4,6 @@ angular.module('starter.services', ['ngCordova', 'elasticsearch'])
   ['$q', 'esFactory', '$location', '$localstorage', function($q, elasticsearch, $location, $localstorage){
     var client = elasticsearch({
       host: $location.host() + ":9200"
-      //host: "http://es.phodal.com/"
     });
 
     var search = function(term, offset){
