@@ -187,7 +187,9 @@ angular.module('starter.controllers', ['ngCordova', 'elasticsearch'])
 			es_server: $localstorage.get('es_server'),
 			es_index: $localstorage.get('es_index')
 		};
+
 		$scope.setting =  function () {
+			$scope.data = angular.extend($scope.placeholder, $scope.data);
 			$localstorage.set('api_server', $scope.data.api_server);
 			$localstorage.set('es_server', $scope.data.es_server);
 			$localstorage.set('es_index', $scope.data.es_index);
